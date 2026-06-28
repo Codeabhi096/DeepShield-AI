@@ -1,0 +1,120 @@
+# ── Python ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# ── Virtual Environments ──────────────────────────────────
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# ── Environment Variables ─────────────────────────────────
+.env
+.env.local
+.env.development
+.env.staging
+.env.production
+!.env.example
+
+# ── ML Models & Large Files ───────────────────────────────
+data/models/*.pt
+data/models/*.pth
+data/models/*.bin
+data/models/*.onnx
+data/models/*.h5
+data/models/*.pkl
+backend/ml_models/pretrained/*.pt
+backend/ml_models/pretrained/*.pth
+backend/ml_models/pretrained/*.bin
+backend/ml_models/pretrained/*.onnx
+
+# ── Uploaded & Generated Files ────────────────────────────
+data/uploads/*
+data/cache/*
+data/results/*
+!data/uploads/.gitkeep
+!data/cache/.gitkeep
+!data/results/.gitkeep
+
+# ── Logs ──────────────────────────────────────────────────
+logs/*.log
+!logs/.gitkeep
+*.log
+
+# ── Database ──────────────────────────────────────────────
+database/backups/*
+!database/backups/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Docker ────────────────────────────────────────────────
+.docker/
+
+# ── Node / Frontend ───────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn
+dist/
+.cache/
+
+# ── IDEs & Editors ────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── OS ────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ── AWS ───────────────────────────────────────────────────
+.aws/
+*.pem
+*.key
+
+# ── Kubernetes Secrets ────────────────────────────────────
+kubernetes/base/secrets.yaml
+
+# ── Misc ──────────────────────────────────────────────────
+*.bak
+*.tmp
+*.temp
+.cache/
+tmp/
+temp/
