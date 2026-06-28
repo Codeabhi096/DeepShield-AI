@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — DeepShield AI</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="icon" href="assets/images/favicon.ico" />
+</head>
+<body class="dashboard-body">
+
+  <!-- ── NAVBAR ─────────────────────────────────────────── -->
+  <nav class="navbar" id="dashNav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-dot"></span>
+        DeepShield AI
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="detection/video-detection.html">Detect</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="settings.html">Settings</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="usage-pill" id="usagePill">
+          <span id="usageText">42 / 50 detections</span>
+        </div>
+        <div class="nav-avatar" id="userAvatar" title="Profile">AS</div>
+        <div class="avatar-dropdown" id="avatarDropdown">
+          <a href="profile.html">Profile</a>
+          <a href="settings.html">Settings</a>
+          <a href="#" data-logout>Sign out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── MAIN ───────────────────────────────────────────── -->
+  <main class="dash-main">
+
+    <!-- Page header -->
+    <div class="dash-header">
+      <div>
+        <h1 id="greeting">Dashboard</h1>
+        <p class="dash-date" id="dashDate"></p>
+      </div>
+      <a href="detection/video-detection.html" class="btn btn-primary">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New detection
+      </a>
+    </div>
+
+    <!-- ── STATS ──────────────────────────────────────── -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total detections</div>
+        <div class="stat-number" id="statTotal">—</div>
+        <div class="stat-sub up" id="statTotalSub">Loading...</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Deepfakes found</div>
+        <div class="stat-number" id="statFakes">—</div>
+        <div class="stat-sub danger" id="statFakesSub">Loading...</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg. confidence</div>
+        <div class="stat-number" id="statConfidence">—</div>
+        <div class="stat-sub up" id="statConfSub">Loading...</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Detections left</div>
+        <div class="stat-number" id="statLeft">—</div>
+        <div class="stat-sub warning" id="statLeftSub">Loading...</div>
+      </div>
+    </div>
+
+    <!-- ── MIDDLE ROW — Upload + Activity ─────────────── -->
+    <div class="mid-grid">
+
+      <!-- Quick upload -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <h2>Quick upload</h2>
+        </div>
+
+        <!-- Detection type tabs -->
+        <div class="detect-tabs" id="detectTabs">
+          <button class="detect-tab active" data-type="video">Video</button>
+          <button class="detect-tab" data-type="image">Image</button>
+          <button class="detect-tab" data-type="audio">Audio</button>
+          <button class="detect-tab" data-type="face_swap">Face swap</button>
+        </div>
+
+        <!-- Drop zone -->
+        <div class="upload-zone" id="uploadZone">
+          <div class="upload-zone-icon">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <p class="upload-zone-title">Drag & drop or click to upload</p>
+          <p class="upload-zone-sub" id="uploadHint">Supports MP4, AVI, MOV up to 500MB</p>
+          <input type="file" id="fileInput" hidden />
+          <button class="btn btn-outline" id="browseBtn" style="margin-top:var(--space-4)">Browse files</button>
+        </div>
+
+        <!-- File selected state -->
+        <div class="upload-selected" id="uploadSelected" style="display:none;">
+          <div class="selected-file">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span id="selectedFileName">file.mp4</span>
+            <span id="selectedFileSize" class="file-size"></span>
+          </div>
+          <div class="upload-actions">
+            <button class="btn btn-outline" id="clearFile">Remove</button>
+            <button class="btn btn-primary" id="analyzeBtn">Analyze</button>
+          </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="upload-progress" id="uploadProgress" style="display:none;">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <p class="progress-label" id="progressLabel">Uploading...</p>
+        </div>
+      </div>
+
+      <!-- Recent activity -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <h2>Recent activity</h2>
+          <a href="history.html" class="view-all">View all</a>
+        </div>
+        <div class="activity-list" id="activityList">
+          <div class="activity-empty">Loading...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── RECENT DETECTIONS TABLE ─────────────────────── -->
+    <div class="dash-card">
+      <div class="dash-card-header">
+        <h2>Recent detections</h2>
+        <a href="history.html" class="view-all">View all</a>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="detections-table" id="detectionsTable">
+          <thead>
+            <tr>
+              <th>File</th>
+              <th>Type</th>
+              <th>Result</th>
+              <th>Confidence</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="detectionsBody">
+            <tr>
+              <td colspan="6" class="table-empty">Loading detections...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+
+</body>
+</html>

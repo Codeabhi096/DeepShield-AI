@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeepShield AI — Deepfake Detection Platform</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="icon" href="assets/images/favicon.ico" />
+</head>
+<body>
+
+  <!-- ── NAVBAR ─────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <span class="logo-dot"></span>
+        DeepShield AI
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="docs/README.md">Docs</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-ghost">Login</a>
+        <a href="register.html" class="btn btn-primary">Get started</a>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        AI-powered deepfake detection
+      </div>
+
+      <h1 class="hero-title">
+        Detect <span class="text-accent">deepfakes</span><br />
+        before they cause harm
+      </h1>
+
+      <p class="hero-subtitle">
+        Enterprise-grade detection for videos, images, voice clones,
+        and face swaps — with explainable AI insights.
+      </p>
+
+      <div class="hero-actions">
+        <a href="register.html" class="btn btn-primary btn-lg">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Analyze media
+        </a>
+        <a href="#how-it-works" class="btn btn-outline btn-lg">View demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ──────────────────────────────────────────── -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">99.2%</div>
+          <div class="stat-label">Detection accuracy</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">&lt;2s</div>
+          <div class="stat-label">Avg. analysis time</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">4</div>
+          <div class="stat-label">Detection types</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">SOC2</div>
+          <div class="stat-label">Compliant</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ───────────────────────────────────────── -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Features</span>
+        <h2 class="section-title">Everything you need to fight synthetic media</h2>
+        <p class="section-sub">Four specialized detectors, one unified platform</p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+          </div>
+          <h3>Video deepfake detection</h3>
+          <p>Frame-by-frame analysis using FaceForensics++ model with temporal consistency checks.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <h3>Image manipulation detection</h3>
+          <p>CLIP-based model detects AI-generated images, inpainting, and splicing artifacts.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </div>
+          <h3>Voice deepfake detection</h3>
+          <p>Audio ML model identifies voice cloning, TTS synthesis, and speaker spoofing.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3>Face swap detection</h3>
+          <p>YOLO-based detector flags face swaps with region-level heatmaps and confidence scores.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h3>Explainable AI insights</h3>
+          <p>Heatmaps, attention maps, and confidence-per-frame breakdowns so you understand every decision.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Real-time webcam detection</h3>
+          <p>Live stream analysis via browser webcam — detect face manipulations in real time.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ───────────────────────────────────── -->
+  <section class="section section-dark" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">How it works</span>
+        <h2 class="section-title">Three steps to verify any media</h2>
+        <p class="section-sub">From upload to explainable result in seconds</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <h3>Upload media</h3>
+          <p>Upload video, image, or audio via dashboard or REST API. Up to 500MB supported.</p>
+        </div>
+        <div class="step-divider" aria-hidden="true">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <h3>AI analyzes</h3>
+          <p>Our ensemble of detectors runs async via Celery workers with GPU acceleration.</p>
+        </div>
+        <div class="step-divider" aria-hidden="true">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <h3>Get results</h3>
+          <p>Authenticity score, confidence %, heatmaps, and frame-level breakdown in one report.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING ────────────────────────────────────────── -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Pricing</span>
+        <h2 class="section-title">Simple, transparent pricing</h2>
+        <p class="section-sub">Start free, scale as you grow</p>
+      </div>
+
+      <div class="pricing-grid">
+
+        <div class="pricing-card">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price">$0 <span>/ month</span></div>
+          <p class="plan-desc">For individuals testing the platform</p>
+          <ul class="plan-features">
+            <li>50 detections / month</li>
+            <li>Image + video detection</li>
+            <li>Basic results report</li>
+            <li>API access</li>
+          </ul>
+          <a href="register.html" class="btn btn-outline btn-full">Get started free</a>
+        </div>
+
+        <div class="pricing-card pricing-card--popular">
+          <div class="popular-badge">Most popular</div>
+          <div class="plan-name">Pro</div>
+          <div class="plan-price">$49 <span>/ month</span></div>
+          <p class="plan-desc">For teams and growing businesses</p>
+          <ul class="plan-features">
+            <li>2,000 detections / month</li>
+            <li>All 4 detection types</li>
+            <li>Heatmaps + explainability</li>
+            <li>Webhook notifications</li>
+            <li>Priority processing</li>
+          </ul>
+          <a href="register.html" class="btn btn-primary btn-full">Start free trial</a>
+        </div>
+
+        <div class="pricing-card">
+          <div class="plan-name">Enterprise</div>
+          <div class="plan-price">Custom</div>
+          <p class="plan-desc">For large-scale deployments</p>
+          <ul class="plan-features">
+            <li>Unlimited detections</li>
+            <li>On-premise deployment</li>
+            <li>SLA + dedicated support</li>
+            <li>Custom model fine-tuning</li>
+            <li>SOC2 compliance docs</li>
+          </ul>
+          <a href="mailto:sales@deepshield.ai" class="btn btn-outline btn-full">Contact sales</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ────────────────────────────────────────────── -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Start detecting deepfakes today</h2>
+      <p>Free to start. No credit card required.</p>
+      <a href="register.html" class="btn btn-primary btn-lg">Create free account</a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <span class="logo-dot"></span>
+          DeepShield AI
+        </div>
+        <div class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Docs</a>
+          <a href="#">GitHub</a>
+        </div>
+        <p class="footer-copy">© 2026 DeepShield AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/utils.js"></script>
+
+</body>
+</html>
