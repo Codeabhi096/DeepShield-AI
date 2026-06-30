@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Detection — DeepShield AI</title>
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/detection.css" />
+  <link rel="icon" href="../assets/images/favicon.ico" />
+</head>
+<body class="dashboard-body">
+
+  <!-- ── NAVBAR ─────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <span class="logo-dot"></span>
+        DeepShield AI
+      </a>
+      <ul class="nav-links">
+        <li><a href="../dashboard.html">Dashboard</a></li>
+        <li><a href="video-detection.html" class="active">Detect</a></li>
+        <li><a href="../history.html">History</a></li>
+        <li><a href="../settings.html">Settings</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="nav-avatar" id="userAvatar" title="Profile">AS</div>
+        <div class="avatar-dropdown" id="avatarDropdown">
+          <a href="../profile.html">Profile</a>
+          <a href="../settings.html">Settings</a>
+          <a href="#" data-logout>Sign out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── MAIN ───────────────────────────────────────────── -->
+  <main class="dash-main">
+
+    <div class="breadcrumb">
+      <a href="../dashboard.html">Dashboard</a> / <span>Video detection</span>
+    </div>
+
+    <div class="dash-header">
+      <div>
+        <h1>Video deepfake detection</h1>
+        <p class="dash-date">Upload a video to analyze for manipulation using FaceForensics++ model</p>
+      </div>
+    </div>
+
+    <!-- ── Type switcher tabs ───────────────────────────── -->
+    <div class="detection-tabs">
+      <a href="video-detection.html" class="detection-tab active">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Video
+      </a>
+      <a href="image-detection.html" class="detection-tab">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Image
+      </a>
+      <a href="voice-detection.html" class="detection-tab">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+        Voice
+      </a>
+      <a href="face-swap-detection.html" class="detection-tab">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg>
+        Face swap
+      </a>
+    </div>
+
+    <!-- ── Main grid — Upload + Result ─────────────────── -->
+    <div class="detection-grid">
+
+      <!-- Upload card -->
+      <div class="dash-card">
+        <div class="dash-card-header"><h2>Upload video</h2></div>
+
+        <div class="big-dropzone" id="dropzone">
+          <div class="big-dropzone-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <p class="big-dropzone-title">Drag & drop your video here</p>
+          <p class="big-dropzone-sub">or click to browse from your device</p>
+          <input type="file" id="fileInput" accept="video/mp4,video/avi,video/quicktime,video/x-matroska" hidden />
+          <button class="btn btn-primary" id="browseBtn">Choose file</button>
+          <p class="big-dropzone-formats">MP4, AVI, MOV, MKV · Max 500MB</p>
+        </div>
+
+        <!-- Video preview + selected file -->
+        <div class="video-preview" id="videoPreview" style="display:none;">
+          <video id="previewPlayer" controls></video>
+          <div class="selected-file-row">
+            <div class="selected-file">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span id="fileName">file.mp4</span>
+              <span class="file-size" id="fileSize"></span>
+            </div>
+            <button class="btn btn-outline" id="removeFile">Remove</button>
+          </div>
+          <button class="btn btn-primary btn-full" id="analyzeBtn" style="margin-top:var(--space-3)">
+            <span class="btn-text">Analyze video</span>
+            <span class="btn-spinner" id="analyzeSpinner" style="display:none;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            </span>
+          </button>
+        </div>
+
+        <!-- Progress -->
+        <div class="upload-progress" id="uploadProgress" style="display:none;">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <p class="progress-label" id="progressLabel">Uploading...</p>
+        </div>
+      </div>
+
+      <!-- Result card -->
+      <div class="dash-card">
+        <div class="dash-card-header"><h2>Analysis result</h2></div>
+
+        <!-- Empty state -->
+        <div class="result-empty" id="resultEmpty">
+          <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h.01M15 9h.01M9 15c.83-1 2.17-1 3 0M15 15c-.83-1-2.17-1-3 0"/></svg>
+          <p>Upload a video to see results here</p>
+        </div>
+
+        <!-- Processing state -->
+        <div class="result-processing" id="resultProcessing" style="display:none;">
+          <div class="processing-spinner">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <p>Analyzing frames for manipulation...</p>
+          <p class="processing-sub">This usually takes a few seconds</p>
+        </div>
+
+        <!-- Result state -->
+        <div class="result-content" id="resultContent" style="display:none;">
+          <div class="verdict-banner" id="verdictBanner">
+            <div class="verdict-icon" id="verdictIcon"></div>
+            <div>
+              <div class="verdict-text" id="verdictText">—</div>
+              <div class="verdict-sub" id="verdictSub">—</div>
+            </div>
+          </div>
+
+          <div class="result-scores">
+            <div class="result-score-box">
+              <div class="result-score-num" id="confidenceScore">—</div>
+              <div class="result-score-label">Confidence</div>
+            </div>
+            <div class="result-score-box">
+              <div class="result-score-num" id="authenticityScore">—</div>
+              <div class="result-score-label">Authenticity score</div>
+            </div>
+            <div class="result-score-box">
+              <div class="result-score-num" id="processingTime">—</div>
+              <div class="result-score-label">Processing time</div>
+            </div>
+          </div>
+
+          <div id="heatmapSection" style="display:none;">
+            <div class="result-section-title">Manipulation heatmap</div>
+            <img id="heatmapImg" class="result-heatmap" alt="Detection heatmap" />
+          </div>
+
+          <div class="result-section-title">Explanation</div>
+          <p class="result-explanation" id="resultExplanation">—</p>
+
+          <button class="btn btn-outline btn-full" id="newAnalysisBtn" style="margin-top:var(--space-4)">
+            Analyze another video
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Recent analyses ──────────────────────────────── -->
+    <div class="dash-card">
+      <div class="dash-card-header">
+        <h2>Recent video analyses</h2>
+        <a href="../history.html?type=video" class="view-all">View all</a>
+      </div>
+      <div class="activity-list" id="recentVideos">
+        <div class="activity-empty">Loading...</div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/detection.js"></script>
+
+</body>
+</html>
