@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings — DeepShield AI</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/settings.css" />
+  <link rel="icon" href="assets/images/favicon.ico" />
+</head>
+<body class="dashboard-body">
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo"><span class="logo-dot"></span>DeepShield AI</a>
+      <ul class="nav-links">
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="detection/video-detection.html">Detect</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="settings.html" class="active">Settings</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="nav-avatar" id="userAvatar">AS</div>
+        <div class="avatar-dropdown" id="avatarDropdown">
+          <a href="profile.html">Profile</a>
+          <a href="settings.html">Settings</a>
+          <a href="#" data-logout>Sign out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="dash-main settings-main">
+    <div class="dash-header"><h1>Settings</h1></div>
+
+    <div class="settings-layout">
+
+      <nav class="settings-nav">
+        <button class="settings-tab active" data-tab="general">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          General
+        </button>
+        <button class="settings-tab" data-tab="security">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Security
+        </button>
+        <button class="settings-tab" data-tab="api">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          API & Webhooks
+        </button>
+      </nav>
+
+      <div class="settings-content">
+
+        <!-- GENERAL -->
+        <div class="settings-panel active" id="tab-general">
+
+          <div class="dash-card settings-card">
+            <div class="settings-card-header"><h2>Preferences</h2><p>Customize how DeepShield AI works for you</p></div>
+
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Default detection type</h4><p>Which detector opens by default on the Detect page</p></div>
+              <select class="settings-select" id="defaultDetection">
+                <option value="video">Video</option>
+                <option value="image">Image</option>
+                <option value="audio">Voice</option>
+                <option value="face_swap">Face swap</option>
+              </select>
+            </div>
+
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Results per page</h4><p>Number of detections shown in history table</p></div>
+              <select class="settings-select" id="resultsPerPage">
+                <option value="8">8</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
+            </div>
+
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Confidence threshold</h4><p>Minimum confidence % to flag as deepfake</p></div>
+              <select class="settings-select" id="confidenceThreshold">
+                <option value="30">30%</option>
+                <option value="50" selected>50%</option>
+                <option value="70">70%</option>
+                <option value="90">90%</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="dash-card settings-card">
+            <div class="settings-card-header"><h2>Notifications</h2><p>Choose when and how you want to be notified</p></div>
+
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Detection complete</h4><p>Email when your analysis finishes</p></div>
+              <div class="toggle" id="toggle-emailComplete" data-key="emailComplete"><div class="toggle-thumb"></div></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Deepfake alert</h4><p>Immediate email when a deepfake is detected</p></div>
+              <div class="toggle on" id="toggle-deepfakeAlert" data-key="deepfakeAlert"><div class="toggle-thumb"></div></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Weekly summary</h4><p>Digest of all detections sent every Monday</p></div>
+              <div class="toggle on" id="toggle-weeklySummary" data-key="weeklySummary"><div class="toggle-thumb"></div></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Usage limit warning</h4><p>Alert when 80% of monthly detections are used</p></div>
+              <div class="toggle on" id="toggle-usageWarning" data-key="usageWarning"><div class="toggle-thumb"></div></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Product updates</h4><p>News about new features and improvements</p></div>
+              <div class="toggle" id="toggle-productUpdates" data-key="productUpdates"><div class="toggle-thumb"></div></div>
+            </div>
+          </div>
+
+          <div class="dash-card settings-card">
+            <div class="settings-card-header"><h2>Data & Privacy</h2><p>Control how your media files are stored</p></div>
+
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Auto-delete uploaded files</h4><p>Automatically remove media after analysis completes</p></div>
+              <div class="toggle on" id="toggle-autoDelete" data-key="autoDelete"><div class="toggle-thumb"></div></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Retention period</h4><p>How long detection results are stored</p></div>
+              <select class="settings-select" id="retentionPeriod">
+                <option value="7">7 days</option>
+                <option value="30" selected>30 days</option>
+                <option value="90">90 days</option>
+                <option value="365">1 year</option>
+              </select>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Export my data</h4><p>Download all your detection history as JSON</p></div>
+              <button class="btn btn-outline" id="exportDataBtn">Export</button>
+            </div>
+          </div>
+
+          <div class="settings-save-row">
+            <button class="btn btn-primary" id="saveGeneralBtn">Save changes</button>
+            <span class="save-status" id="generalSaveStatus"></span>
+          </div>
+        </div>
+
+        <!-- SECURITY -->
+        <div class="settings-panel" id="tab-security">
+
+          <div class="dash-card settings-card">
+            <div class="settings-card-header"><h2>Change password</h2><p>Use a strong password with at least 8 characters</p></div>
+
+            <div class="alert alert-success" id="pwSuccess" style="display:none;">Password updated successfully.</div>
+            <div class="alert alert-error"   id="pwError"   style="display:none;"><span id="pwErrorMsg"></span></div>
+
+            <form id="passwordForm" class="auth-form">
+              <div class="form-field">
+                <label for="currentPassword">Current password</label>
+                <div class="input-wrapper">
+                  <input type="password" id="currentPassword" placeholder="••••••••" required />
+                  <button type="button" class="toggle-password" aria-label="Show password">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="newPassword">New password</label>
+                <div class="input-wrapper">
+                  <input type="password" id="newPassword" placeholder="Min. 8 characters" required />
+                  <button type="button" class="toggle-password" aria-label="Show password">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+                <div class="password-strength" id="strengthBar" style="display:none;">
+                  <div class="strength-bar">
+                    <div class="strength-segment" id="seg1"></div>
+                    <div class="strength-segment" id="seg2"></div>
+                    <div class="strength-segment" id="seg3"></div>
+                    <div class="strength-segment" id="seg4"></div>
+                  </div>
+                  <span class="strength-label" id="strengthLabel"></span>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="confirmNewPassword">Confirm new password</label>
+                <div class="input-wrapper">
+                  <input type="password" id="confirmNewPassword" placeholder="••••••••" required />
+                  <button type="button" class="toggle-password" aria-label="Show password">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+                <span class="field-error" id="confirmPwError"></span>
+              </div>
+              <button type="submit" class="btn btn-primary" id="updatePwBtn">
+                <span class="btn-text">Update password</span>
+                <span class="btn-spinner" id="pwSpinner" style="display:none;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </span>
+              </button>
+            </form>
+          </div>
+
+          <div class="dash-card settings-card">
+            <div class="settings-card-header"><h2>Active sessions</h2><p>Devices currently signed in to your account</p></div>
+            <div class="sessions-list" id="sessionsList">
+              <div class="session-item">
+                <div class="session-icon">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <div class="session-info">
+                  <div class="session-device">Windows · Chrome</div>
+                  <div class="session-meta">Ludhiana, IN · Active now</div>
+                </div>
+                <span class="current-badge">Current</span>
+              </div>
+            </div>
+            <button class="btn btn-outline" id="signOutAllBtn" style="margin-top:var(--space-4)">Sign out all other sessions</button>
+          </div>
+
+          <div class="dash-card settings-card">
+            <div class="settings-card-header"><h2>Two-factor authentication</h2><p>Add an extra layer of security to your account</p></div>
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>Authenticator app (TOTP)</h4><p>Use Google Authenticator or Authy</p></div>
+              <button class="btn btn-outline" id="setup2faBtn">Set up</button>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info"><h4>SMS verification</h4><p>Receive codes via text message</p></div>
+              <button class="btn btn-outline" id="setupSmsBtn">Set up</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- API & WEBHOOKS -->
+        <div class="settings-panel" id="tab-api">
+
+          <div class="dash-card settings-card">
+            <div class="settings-card-header"><h2>API key</h2><p>Use this key to authenticate API requests from your app</p></div>
+            <div class="api-key-box">
+              <div class="api-key-label">Your API key</div>
+              <div class="api-key-row">
+                <input type="password" id="apiKey" readonly value="sk-••••••••••••••••••••••••••••••••" />
+                <button class="btn btn-outline" id="showApiKey">Show</button>
+                <button class="btn btn-outline" id="copyApiKey">Copy</button>
+              </div>
+              <p class="api-key-warning">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Never share your API key publicly. Regenerate it if compromised.
+              </p>
+              <button class="btn btn-outline" id="regenApiKey" style="margin-top:var(--space-3)">Regenerate key</button>
+            </div>
+          </div>
+
+          <div class="dash-card settings-card">
+            <div class="settings-card-header"><h2>API usage</h2><p>Current month's API consumption</p></div>
+            <div class="api-usage-grid">
+              <div class="api-stat"><div class="api-stat-num" id="apiRequests">—</div><div class="api-stat-label">Requests this month</div></div>
+              <div class="api-stat"><div class="api-stat-num" id="apiSuccessRate">—</div><div class="api-stat-label">Success rate</div></div>
+              <div class="api-stat"><div class="api-stat-num" id="apiAvgLatency">—</div><div class="api-stat-label">Avg. latency</div></div>
+            </div>
+          </div>
+
+          <div class="dash-card settings-card">
+            <div class="settings-card-header"><h2>Webhooks</h2><p>Get notified via HTTP POST when a detection completes</p></div>
+
+            <div class="alert alert-success" id="webhookSuccess" style="display:none;">Webhook saved.</div>
+            <div class="alert alert-error"   id="webhookError"   style="display:none;"><span id="webhookErrorMsg"></span></div>
+
+            <form id="webhookForm" class="auth-form">
+              <div class="form-field">
+                <label for="webhookUrl">Webhook URL</label>
+                <input type="url" id="webhookUrl" placeholder="https://your-server.com/webhook" />
+              </div>
+              <div class="form-field">
+                <label for="webhookSecret">Secret (optional)</label>
+                <input type="text" id="webhookSecret" placeholder="Used to sign the payload" />
+              </div>
+              <div class="webhook-events">
+                <div class="webhook-events-label">Trigger on</div>
+                <div class="webhook-checkboxes">
+                  <label class="check-label"><input type="checkbox" checked /> Detection completed</label>
+                  <label class="check-label"><input type="checkbox" checked /> Deepfake detected</label>
+                  <label class="check-label"><input type="checkbox" /> Job failed</label>
+                </div>
+              </div>
+              <div class="webhook-actions">
+                <button type="button" class="btn btn-outline" id="testWebhookBtn">Test webhook</button>
+                <button type="submit" class="btn btn-primary" id="saveWebhookBtn">Save webhook</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="js/utils.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/settings.js"></script>
+
+</body>
+</html>
