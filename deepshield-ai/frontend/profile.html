@@ -13,13 +13,9 @@
 </head>
 <body class="dashboard-body">
 
-  <!-- ── NAVBAR ─────────────────────────────────────────── -->
   <nav class="navbar">
     <div class="nav-container">
-      <a href="index.html" class="nav-logo">
-        <span class="logo-dot"></span>
-        DeepShield AI
-      </a>
+      <a href="index.html" class="nav-logo"><span class="logo-dot"></span>DeepShield AI</a>
       <ul class="nav-links">
         <li><a href="dashboard.html">Dashboard</a></li>
         <li><a href="detection/video-detection.html">Detect</a></li>
@@ -27,7 +23,7 @@
         <li><a href="settings.html">Settings</a></li>
       </ul>
       <div class="nav-right">
-        <div class="nav-avatar" id="userAvatar" title="Profile">AS</div>
+        <div class="nav-avatar" id="userAvatar">AS</div>
         <div class="avatar-dropdown" id="avatarDropdown">
           <a href="profile.html">Profile</a>
           <a href="settings.html">Settings</a>
@@ -37,115 +33,169 @@
     </div>
   </nav>
 
-  <!-- ── MAIN ───────────────────────────────────────────── -->
   <main class="dash-main profile-main">
 
     <div class="dash-header">
-      <h1>Profile</h1>
+      <h1>My Profile</h1>
+    </div>
+
+    <!-- ── Hero banner ─────────────────────────────────── -->
+    <div class="profile-hero">
+      <div class="profile-hero-glow"></div>
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar" id="profileAvatar">AS</div>
+      </div>
+      <div class="profile-hero-info">
+        <div class="profile-hero-name" id="profileName">Loading...</div>
+        <div class="profile-hero-email" id="profileEmail">—</div>
+        <div class="profile-hero-badges">
+          <span class="profile-plan-badge" id="planBadge">Free Plan</span>
+          <span class="profile-joined-badge" id="joinedBadge">—</span>
+        </div>
+      </div>
+      <div class="profile-hero-actions">
+        <a href="index.html#pricing" class="btn btn-primary">Upgrade plan</a>
+        <a href="#" data-logout class="btn btn-outline">Sign out</a>
+      </div>
+    </div>
+
+    <!-- ── Stats row ───────────────────────────────────── -->
+    <div class="profile-stats">
+      <div class="profile-stat">
+        <div class="profile-stat-num" id="statTotal">—</div>
+        <div class="profile-stat-label">Total detections</div>
+      </div>
+      <div class="profile-stat">
+        <div class="profile-stat-num danger" id="statFakes">—</div>
+        <div class="profile-stat-label">Deepfakes found</div>
+      </div>
+      <div class="profile-stat">
+        <div class="profile-stat-num success" id="statLeft">—</div>
+        <div class="profile-stat-label">Detections left</div>
+      </div>
+      <div class="profile-stat">
+        <div class="profile-stat-num" id="statPlan">Free</div>
+        <div class="profile-stat-label">Current plan</div>
+      </div>
     </div>
 
     <div class="profile-grid">
 
-      <!-- ── Left — avatar + plan + usage ─────────────── -->
-      <div class="dash-card profile-side">
-        <div class="profile-avatar" id="profileAvatar">AS</div>
-        <div class="profile-name" id="profileName">Loading...</div>
-        <div class="profile-email" id="profileEmail">—</div>
+      <!-- ── Left — Plan & Usage ────────────────────── -->
+      <div class="dash-card">
+        <div class="dash-card-header"><h2>Plan & Usage</h2></div>
 
-        <span class="plan-badge" id="planBadge">Free Plan</span>
+        <div class="plan-info">
+          <div class="plan-name-row">
+            <span class="plan-title" id="planTitle">Free Plan</span>
+            <span class="plan-price" id="planPrice">$0 / month</span>
+          </div>
 
-        <div class="usage-section">
           <div class="usage-label">
-            <span>Detections used</span>
-            <span id="usageCount">0 / 50</span>
+            <span>Detections used this month</span>
+            <span id="usageCount">0 / 5</span>
           </div>
           <div class="usage-bar">
-            <div class="usage-fill" id="usageFill" style="width: 0%;"></div>
+            <div class="usage-fill" id="usageFill" style="width:0%"></div>
           </div>
+          <div class="usage-reset" id="usageReset">Resets next month</div>
         </div>
 
-        <a href="index.html#pricing" class="btn btn-outline btn-full" style="margin-top:var(--space-4)">
-          Upgrade plan
+        <div class="plan-features-list" id="planFeaturesList">
+          <!-- filled by JS -->
+        </div>
+
+        <a href="index.html#pricing" class="btn btn-primary btn-full" style="margin-top:var(--space-5)">
+          Upgrade to Pro — $49/mo
         </a>
       </div>
 
-      <!-- ── Right — editable info ────────────────────── -->
-      <div class="dash-card">
-        <div class="dash-card-header"><h2>Personal information</h2></div>
+      <!-- ── Right — Personal info + Password ──────── -->
+      <div style="display:flex;flex-direction:column;gap:var(--space-4)">
 
-        <div class="alert alert-success" id="saveSuccess" style="display:none;">
-          Profile updated successfully.
-        </div>
-        <div class="alert alert-error" id="saveError" style="display:none;">
-          <span id="saveErrorMsg">Could not update profile.</span>
-        </div>
+        <!-- Personal info -->
+        <div class="dash-card">
+          <div class="dash-card-header"><h2>Personal information</h2></div>
 
-        <form id="profileForm" class="auth-form">
+          <div class="alert alert-success" id="saveSuccess" style="display:none;">Profile updated successfully.</div>
+          <div class="alert alert-error"   id="saveError"   style="display:none;"><span id="saveErrorMsg"></span></div>
 
-          <div class="form-row">
-            <div class="form-field">
-              <label for="firstName">First name</label>
-              <input type="text" id="firstName" name="firstName" required />
+          <form id="profileForm" class="profile-form">
+            <div class="form-row">
+              <div class="form-field">
+                <label for="firstName">First name</label>
+                <input type="text" id="firstName" required />
+              </div>
+              <div class="form-field">
+                <label for="lastName">Last name</label>
+                <input type="text" id="lastName" required />
+              </div>
             </div>
             <div class="form-field">
-              <label for="lastName">Last name</label>
-              <input type="text" id="lastName" name="lastName" required />
+              <label for="email">Email address</label>
+              <input type="email" id="email" required />
             </div>
-          </div>
-
-          <div class="form-field">
-            <label for="email">Email address</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-
-          <div class="form-field">
-            <label for="phone">Phone (optional)</label>
-            <input type="tel" id="phone" name="phone" placeholder="+91 00000 00000" />
-          </div>
-
-          <button type="submit" class="btn btn-primary" id="saveBtn">
-            <span class="btn-text">Save changes</span>
-            <span class="btn-spinner" id="saveSpinner" style="display:none;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-            </span>
-          </button>
-        </form>
-
-        <div class="section-divider"></div>
-
-        <!-- ── API Key ──────────────────────────────────── -->
-        <div class="card-title-row">
-          <h3>API key</h3>
-        </div>
-        <p class="muted-text">Use this key to access the DeepShield API programmatically.</p>
-        <div class="api-key-row">
-          <input type="password" id="apiKeyInput" readonly value="••••••••••••••••••••••••" />
-          <button class="btn btn-outline" id="toggleApiKey">Show</button>
-          <button class="btn btn-outline" id="copyApiKey">Copy</button>
-          <button class="btn btn-outline" id="regenApiKey">Regenerate</button>
+            <div class="form-field">
+              <label for="phone">Phone (optional)</label>
+              <input type="tel" id="phone" placeholder="+91 00000 00000" />
+            </div>
+            <button type="submit" class="btn btn-primary" id="saveBtn">
+              <span class="btn-text">Save changes</span>
+              <span class="btn-spinner" id="saveSpinner" style="display:none;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              </span>
+            </button>
+          </form>
         </div>
 
-        <div class="section-divider"></div>
+        <!-- Change password -->
+        <div class="dash-card">
+          <div class="dash-card-header"><h2>Change password</h2></div>
 
-        <!-- ── Danger zone ──────────────────────────────── -->
-        <div class="danger-row">
-          <div class="danger-text">
-            <h4>Delete account</h4>
-            <p>This will permanently delete your account and all detection history. This cannot be undone.</p>
+          <div class="alert alert-success" id="pwSuccess" style="display:none;">Password updated.</div>
+          <div class="alert alert-error"   id="pwError"   style="display:none;"><span id="pwErrorMsg"></span></div>
+
+          <form id="passwordForm" class="profile-form">
+            <div class="form-field">
+              <label for="currentPassword">Current password</label>
+              <input type="password" id="currentPassword" placeholder="••••••••" required />
+            </div>
+            <div class="form-field">
+              <label for="newPassword">New password</label>
+              <input type="password" id="newPassword" placeholder="Min. 8 characters" required />
+            </div>
+            <div class="form-field">
+              <label for="confirmPassword">Confirm new password</label>
+              <input type="password" id="confirmPassword" placeholder="••••••••" required />
+              <span class="field-error" id="confirmPwError"></span>
+            </div>
+            <button type="submit" class="btn btn-primary" id="pwBtn">
+              <span class="btn-text">Update password</span>
+              <span class="btn-spinner" id="pwSpinner" style="display:none;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              </span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Danger zone -->
+        <div class="danger-card">
+          <div>
+            <div class="danger-title">Delete account</div>
+            <div class="danger-sub">Permanently delete your account and all detection history. This cannot be undone.</div>
           </div>
           <button class="btn btn-danger" id="deleteAccountBtn">Delete account</button>
         </div>
 
       </div>
     </div>
-
   </main>
 
-  <!-- ── Delete confirmation modal ────────────────────── -->
+  <!-- Delete modal -->
   <div class="modal-overlay" id="deleteModal">
-    <div class="modal-box modal-box-sm">
+    <div class="modal-box">
       <h2 class="modal-title">Delete your account?</h2>
-      <p class="modal-meta" style="margin-bottom:var(--space-5)">
+      <p style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.7;margin-bottom:var(--space-6)">
         This will permanently delete your account, all detection history, and uploaded files. This action cannot be undone.
       </p>
       <div class="modal-actions">
