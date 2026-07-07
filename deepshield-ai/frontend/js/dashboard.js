@@ -26,14 +26,13 @@ requireAuth();
 
 // ── Avatar dropdown ───────────────────────────────────────
 
-const userAvatar = document.getElementById('userAvatar');
+const userAvatar    = document.getElementById('userAvatar');
 const avatarDropdown = document.getElementById('avatarDropdown');
 
 userAvatar?.addEventListener('click', (e) => {
   e.stopPropagation();
   avatarDropdown?.classList.toggle('open');
 });
-
 document.addEventListener('click', () => avatarDropdown?.classList.remove('open'));
 
 // ── Load stats ─────────────────────────────────────────────
@@ -56,12 +55,11 @@ async function loadStats() {
     setText('statLeft', stats.detections_left ?? 0);
     setText('statLeftSub', stats.detections_left < 10 ? 'Upgrade for more' : 'Plenty remaining');
 
-    document.getElementById('usageText').textContent =
-      `${stats.detections_used ?? 0} / ${stats.detections_limit ?? 50} detections`;
+    const usageEl = document.getElementById('usageText');
+    if (usageEl) usageEl.textContent = `${stats.detections_used ?? 0} / ${stats.detections_limit ?? 50} detections`;
 
   } catch (err) {
     console.error('Failed to load stats:', err);
-    setText('statTotal', '—');
   }
 }
 
@@ -78,15 +76,12 @@ async function loadActivity() {
 
   try {
     const items = await getRecentDetections(4);
-
     if (!items || items.length === 0) {
       list.innerHTML = '<div class="activity-empty">No detections yet. Upload a file to get started.</div>';
       return;
     }
-
     list.innerHTML = items.map(renderActivityItem).join('');
-
-  } catch (err) {
+  } catch {
     list.innerHTML = '<div class="activity-empty">Could not load activity.</div>';
   }
 }
@@ -96,21 +91,15 @@ function renderActivityItem(item) {
   return `
     <div class="activity-item">
       <div class="activity-icon ${isFake ? 'fake' : 'real'}">
-        ${getTypeIcon(item.detection_type)}
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       </div>
       <div class="activity-info">
         <div class="activity-name">${item.file_name}</div>
         <div class="activity-meta">${item.detection_type} · ${timeAgo(item.created_at)}</div>
       </div>
-      <span class="badge ${isFake ? 'badge-fake' : 'badge-real'}">
-        ${isFake ? 'Deepfake' : 'Authentic'}
-      </span>
+      <span class="badge ${isFake ? 'badge-fake' : 'badge-real'}">${isFake ? 'Deepfake' : 'Authentic'}</span>
     </div>
   `;
-}
-
-function getTypeIcon() {
-  return `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
 }
 
 function timeAgo(dateStr) {
@@ -128,32 +117,25 @@ async function loadDetectionsTable() {
   if (!tbody) return;
 
   try {
-    const data = await getDetectionHistory(1, 5);
+    const data  = await getDetectionHistory(1, 5);
     const items = data?.results || [];
 
     if (items.length === 0) {
       tbody.innerHTML = '<tr><td colspan="6" class="table-empty">No detections yet.</td></tr>';
       return;
     }
-
     tbody.innerHTML = items.map(renderTableRow).join('');
-
-  } catch (err) {
+  } catch {
     tbody.innerHTML = '<tr><td colspan="6" class="table-empty">Could not load detections.</td></tr>';
   }
 }
 
 function renderTableRow(item) {
-  const statusBadge =
-    item.status === 'processing'
-      ? `<span class="badge badge-process">Processing</span>`
-      : item.is_deepfake
-      ? `<span class="badge badge-fake">Deepfake</span>`
-      : `<span class="badge badge-real">Authentic</span>`;
+  const statusBadge = item.is_deepfake
+    ? `<span class="badge badge-fake">Deepfake</span>`
+    : `<span class="badge badge-real">Authentic</span>`;
 
-  const confidence = item.status === 'processing'
-    ? '—'
-    : `<span class="${item.confidence_score > 70 ? 'score-high' : item.confidence_score > 40 ? 'score-mid' : 'score-low'}">${item.confidence_score}%</span>`;
+  const confidence = `<span class="${item.confidence_score > 70 ? 'score-high' : item.confidence_score > 40 ? 'score-mid' : 'score-low'}">${item.confidence_score}%</span>`;
 
   return `
     <tr>
@@ -170,10 +152,11 @@ function renderTableRow(item) {
 // ── Detection type tabs ────────────────────────────────────
 
 let selectedType = 'video';
+
 const hints = {
-  video: 'Supports MP4, AVI, MOV up to 500MB',
-  image: 'Supports JPG, PNG, WEBP up to 10MB',
-  audio: 'Supports WAV, MP3, FLAC up to 50MB',
+  video:     'Supports MP4, AVI, MOV up to 500MB',
+  image:     'Supports JPG, PNG, WEBP up to 10MB',
+  audio:     'Supports WAV, MP3, FLAC up to 50MB',
   face_swap: 'Supports MP4, JPG up to 500MB',
 };
 
@@ -182,7 +165,8 @@ document.querySelectorAll('.detect-tab').forEach(tab => {
     document.querySelectorAll('.detect-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     selectedType = tab.dataset.type;
-    document.getElementById('uploadHint').textContent = hints[selectedType];
+    const hintEl = document.getElementById('uploadHint');
+    if (hintEl) hintEl.textContent = hints[selectedType];
   });
 });
 
@@ -195,8 +179,8 @@ const uploadSelected = document.getElementById('uploadSelected');
 const uploadProgress = document.getElementById('uploadProgress');
 let selectedFile = null;
 
-browseBtn?.addEventListener('click', () => fileInput.click());
-uploadZone?.addEventListener('click', () => fileInput.click());
+browseBtn?.addEventListener('click', () => fileInput?.click());
+uploadZone?.addEventListener('click', () => fileInput?.click());
 
 fileInput?.addEventListener('change', (e) => handleFileSelect(e.target.files[0]));
 
@@ -211,41 +195,45 @@ fileInput?.addEventListener('change', (e) => handleFileSelect(e.target.files[0])
 function handleFileSelect(file) {
   if (!file) return;
   selectedFile = file;
-  document.getElementById('selectedFileName').textContent = file.name;
-  document.getElementById('selectedFileSize').textContent = formatFileSize(file.size);
-  uploadZone.style.display = 'none';
-  uploadSelected.style.display = 'block';
+  const nameEl = document.getElementById('selectedFileName');
+  const sizeEl = document.getElementById('selectedFileSize');
+  if (nameEl) nameEl.textContent = file.name;
+  if (sizeEl) sizeEl.textContent = formatFileSize(file.size);
+  if (uploadZone) uploadZone.style.display = 'none';
+  if (uploadSelected) uploadSelected.style.display = 'block';
 }
 
 document.getElementById('clearFile')?.addEventListener('click', () => {
   selectedFile = null;
-  fileInput.value = '';
-  uploadZone.style.display = 'block';
-  uploadSelected.style.display = 'none';
+  if (fileInput) fileInput.value = '';
+  if (uploadZone) uploadZone.style.display = 'block';
+  if (uploadSelected) uploadSelected.style.display = 'none';
 });
 
 document.getElementById('analyzeBtn')?.addEventListener('click', async () => {
   if (!selectedFile) return;
 
-  uploadSelected.style.display = 'none';
-  uploadProgress.style.display = 'block';
+  if (uploadSelected) uploadSelected.style.display = 'none';
+  if (uploadProgress) uploadProgress.style.display = 'block';
 
   try {
-    const result = await uploadFile(selectedFile, (pct) => {
-      document.getElementById('progressFill').style.width = `${pct}%`;
-      document.getElementById('progressLabel').textContent = `Uploading... ${pct}%`;
+    // selectedType pass karo — image/video/audio/face_swap
+    const uploaded = await uploadFile(selectedFile, selectedType, (pct) => {
+      const fill  = document.getElementById('progressFill');
+      const label = document.getElementById('progressLabel');
+      if (fill)  fill.style.width = `${pct}%`;
+      if (label) label.textContent = pct < 100 ? `Uploading... ${pct}%` : 'Starting analysis...';
     });
 
-    document.getElementById('progressLabel').textContent = 'Starting analysis...';
-    const job = await startDetection(result.job_id, selectedType);
-
+    const job = await startDetection(uploaded.job_id, selectedType);
     window.location.href = `history.html?job=${job.job_id}`;
 
   } catch (err) {
-    document.getElementById('progressLabel').textContent = 'Upload failed. Try again.';
+    const label = document.getElementById('progressLabel');
+    if (label) label.textContent = 'Upload failed. Try again.';
     setTimeout(() => {
-      uploadProgress.style.display = 'none';
-      uploadZone.style.display = 'block';
+      if (uploadProgress) uploadProgress.style.display = 'none';
+      if (uploadZone) uploadZone.style.display = 'block';
     }, 2000);
   }
 });
