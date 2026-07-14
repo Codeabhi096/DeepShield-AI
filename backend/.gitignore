@@ -17,6 +17,7 @@ coverage.xml
 
 # ── Virtual Environment ───────────────────────────────────
 venv/
+venv_new/
 env/
 ENV/
 .venv/
