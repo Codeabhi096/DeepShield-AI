@@ -178,24 +178,7 @@ API Docs : http://127.0.0.1:8000/docs
 
 ---
 
-## 🔌 API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/v1/auth/register` | Register new user |
-| `POST` | `/api/v1/auth/login` | Login, get JWT token |
-| `GET` | `/api/v1/auth/me` | Get current user profile |
-| `PATCH` | `/api/v1/auth/me` | Update profile |
-| `PATCH` | `/api/v1/auth/password` | Change password |
-| `POST` | `/api/v1/upload?detection_type=image` | Upload file |
-| `POST` | `/api/v1/detect` | Start detection |
-| `GET` | `/api/v1/results` | Get all results (paginated) |
-| `GET` | `/api/v1/results/stats` | Dashboard stats |
-| `GET` | `/api/v1/results/recent` | Recent detections |
-| `GET` | `/api/v1/results/{job_id}` | Single result |
-| `GET` | `/health` | Health check |
-
----
 
 ## 🧠 ML Models
 
@@ -236,25 +219,10 @@ API Docs : http://127.0.0.1:8000/docs
 
 ---
 
-## 🗺️ Roadmap
 
-- [x] Phase 1 — Full Frontend UI (9 pages)
-- [x] Phase 2 — Backend API (auth, upload, detection, results)
-- [x] Phase 3 — ML Models (EfficientNet + ResNet-50)
-- [ ] Phase 4 — AWS S3 cloud storage
-- [ ] Phase 5 — Redis + Celery async processing
-- [ ] Phase 6 — Voice deepfake model
-- [ ] Phase 7 — Docker + cloud deployment
-- [ ] Phase 8 — Real-time webcam detection
-
----
 
 ## 👨‍💻 Author
 
 **Abhishek** — [@Codeabhi096](https://github.com/Codeabhi096)
 
 ---
-
-## 📄 License
-
-MIT License — see [LICENSE](LICENSE) for details.
